@@ -12,3 +12,4 @@ main{max-width:720px;margin:0 auto;padding:16px}
 .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--rojo);color:#fff;text-decoration:none;font-weight:600}
 .btn.sec{background:#fff;color:var(--rojo);border:2px solid var(--rojo)}
 .pie{font-size:.8rem;opacity:.7;padding:8px 16px 24px;text-align:center}
+.aviso{background:#7a5a1e;color:#fff;padding:8px 12px;border-radius:10px;margin-bottom:14px;font-size:.9rem;text-align:center}

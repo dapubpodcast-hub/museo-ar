@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Experimento con marcador</title>
-  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <link rel="manifest" href="manifest.webmanifest">
+  <script src="lib/aframe.min.js"></script>
+  <script src="lib/aframe-extras.min.js"></script>
+  <script src="lib/aframe-ar.js"></script>
   <script src="experimentos.js"></script>
   <style>
     #mensaje{position:fixed;top:10px;left:10px;right:10px;padding:12px;background:rgba(0,0,0,.8);color:#fff;
@@ -18,9 +19,9 @@
 <body style="margin:0;overflow:hidden">
   <div id="mensaje">Cargando…</div>
   <a id="volver" href="index.html">← Experimentos</a>
-  <a-scene embedded renderer="logarithmicDepthBuffer: true;" arjs="sourceType: webcam; debugUIEnabled: false;">
+  <a-scene embedded renderer="logarithmicDepthBuffer: true;" arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: lib/camera_para.dat;">
     <a-assets><a-asset-item id="modelo" src=""></a-asset-item></a-assets>
-    <a-marker preset="hiro">
+    <a-marker type="pattern" url="lib/patt.hiro">
       <a-entity id="exp" gltf-model="#modelo" animation-mixer="loop: repeat"></a-entity>
       <a-entity light="type: ambient; intensity: 0.8"></a-entity>
       <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
@@ -39,5 +40,6 @@
     ent.addEventListener('model-loaded', () => { msg.textContent = `${e.titulo}: apunta la cámara al marcador Hiro. ${e.pregunta}`; });
     ent.addEventListener('model-error', () => { msg.textContent = '❌ No se pudo cargar el modelo 3D.'; });
   </script>
+  <script src="registro-sw.js"></script>
 </body>
 </html>
