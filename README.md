@@ -10,3 +10,10 @@ Cuatro experimentos de física con demostración en realidad aumentada.
 - `prueba-ar-robot.html`, `prueba.html`: pruebas originales.
 
 Los modelos son esquemas: no están a escala. Falta probar en iPhone (USDZ en AR Quick Look) y con cámara real en el marcador.
+
+## Uso sin conexión
+El sitio es una PWA: `sw.js` guarda páginas, librerías (`lib/`) y modelos en el teléfono.
+- Abrir una vez con internet (HTTPS) y esperar el aviso "Listo para usarse sin conexión" en `index.html`.
+- En iPhone: Compartir → Agregar a pantalla de inicio. Abrirlo el día antes de cada jornada (iOS puede borrar el caché de sitios sin uso).
+- Si se cambia cualquier archivo, subir `VERSION` en `sw.js` para que los teléfonos actualicen.
+- `marcador-hiro.png` es el marcador para imprimir (5–8 cm por lado, con borde blanco, sin brillo).

@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Museo AR · COMETA y ASTEROIDE</title>
   <link rel="stylesheet" href="estilo.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icono-192.png">
+  <meta name="theme-color" content="#7a1e1e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Museo AR">
   <script src="experimentos.js"></script>
 </head>
 <body>
@@ -13,12 +18,13 @@
     <p>COMETA y ASTEROIDE · museo itinerante</p>
   </header>
   <main>
+    <div id="estado-offline" class="aviso">Preparando el modo sin conexión…</div>
     <div id="lista"></div>
     <div class="tarjeta">
       <small>¿Cómo se usa?</small>
       <p><b>Sin marcador:</b> abre el modelo y pulsa el botón de realidad aumentada para verlo sobre una mesa o el piso.<br>
       <b>Con marcador:</b> imprime o muestra en otra pantalla el marcador Hiro y apunta la cámara hacia él.</p>
-      <a class="btn sec" href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png">Marcador Hiro</a>
+      <a class="btn sec" href="marcador-hiro.png">Marcador Hiro (para imprimir)</a>
     </div>
   </main>
   <p class="pie">Modelos esquemáticos: no están a escala (moléculas, rayos y partículas se agrandan).</p>
@@ -34,5 +40,6 @@
          </div></div>`);
     });
   </script>
+  <script src="registro-sw.js"></script>
 </body>
 </html>

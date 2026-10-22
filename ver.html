@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ver experimento en RA</title>
   <link rel="stylesheet" href="estilo.css">
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="module" src="lib/model-viewer.min.js"></script>
   <script src="experimentos.js"></script>
   <style>model-viewer{width:100%;height:60vh;background:#fff;border-radius:14px;border:2px solid #cdbf9f}</style>
 </head>
@@ -29,5 +30,6 @@
     mv.setAttribute('ios-src', `modelos/${k}.usdz`);
     document.getElementById('otro').href = `marcador.html?m=${k}`;
   </script>
+  <script src="registro-sw.js"></script>
 </body>
 </html>
