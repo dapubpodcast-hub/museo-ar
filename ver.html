@@ -16,7 +16,7 @@
     <model-viewer id="mv" camera-controls autoplay ar ar-modes="webxr scene-viewer quick-look"
       ar-scale="auto" shadow-intensity="0.6" alt="Modelo 3D del experimento"></model-viewer>
     <div class="tarjeta" style="margin-top:14px"><small>Pregunta guía</small><p id="preg" style="margin:6px 0 0"></p></div>
-    <div class="botones"><a class="btn sec" href="index.html">← Experimentos</a><a class="btn sec" id="otro">Con marcador Hiro</a></div>
+    <div class="botones"><a class="btn sec" href="index.html">← Experimentos</a><a class="btn sec" id="otro" href="marcador.html">Con sticker</a></div>
   </main>
   <script>
     const id = new URLSearchParams(location.search).get('m');
@@ -28,7 +28,6 @@
     const mv = document.getElementById('mv');
     mv.setAttribute('src', `modelos/${k}.glb`);
     mv.setAttribute('ios-src', `modelos/${k}.usdz`);
-    document.getElementById('otro').href = `marcador.html?m=${k}`;
   </script>
   <script src="registro-sw.js"></script>
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experimento con marcador</title>
+  <title>Experimentos con sticker</title>
   <link rel="manifest" href="manifest.webmanifest">
   <script src="lib/aframe.min.js"></script>
   <script src="lib/aframe-extras.min.js"></script>
@@ -17,28 +17,35 @@
   </style>
 </head>
 <body style="margin:0;overflow:hidden">
-  <div id="mensaje">Cargando…</div>
+  <div id="mensaje">Apunta la cámara a un sticker de experimento</div>
   <a id="volver" href="index.html">← Experimentos</a>
-  <a-scene embedded renderer="logarithmicDepthBuffer: true;" arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: lib/camera_para.dat;">
-    <a-assets><a-asset-item id="modelo" src=""></a-asset-item></a-assets>
-    <a-marker type="pattern" url="lib/patt.hiro">
-      <a-entity id="exp" gltf-model="#modelo" animation-mixer="loop: repeat"></a-entity>
-      <a-entity light="type: ambient; intensity: 0.8"></a-entity>
-      <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
-    </a-marker>
+  <a-scene embedded renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false"
+           arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: lib/camera_para.dat;">
+    <a-assets timeout="30000" id="activos"></a-assets>
+    <a-entity id="marcadores"></a-entity>
+    <a-entity light="type: ambient; intensity: 0.8"></a-entity>
+    <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
     <a-entity camera></a-entity>
   </a-scene>
   <script>
-    const id = new URLSearchParams(location.search).get('m');
-    const k = EXPERIMENTOS[id] ? id : 'punto_ciego', e = EXPERIMENTOS[k];
-    const ent = document.getElementById('exp'), msg = document.getElementById('mensaje');
-    document.getElementById('modelo').setAttribute('src', `modelos/${k}.glb`);
-    ent.setAttribute('scale', `${e.escala} ${e.escala} ${e.escala}`);
-    ent.setAttribute('position', `0 ${e.y} 0`);
-    document.title = e.titulo;
-    msg.textContent = `Cargando «${e.titulo}»…`;
-    ent.addEventListener('model-loaded', () => { msg.textContent = `${e.titulo}: apunta la cámara al marcador Hiro. ${e.pregunta}`; });
-    ent.addEventListener('model-error', () => { msg.textContent = '❌ No se pudo cargar el modelo 3D.'; });
+    // Un marcador (sticker) distinto por experimento: lib/patt-<id>.patt
+    const msg = document.getElementById('mensaje');
+    const activos = document.getElementById('activos');
+    const grupo = document.getElementById('marcadores');
+    Object.entries(EXPERIMENTOS).forEach(([id, e]) => {
+      activos.insertAdjacentHTML('beforeend', `<a-asset-item id="m-${id}" src="modelos/${id}.glb"></a-asset-item>`);
+      grupo.insertAdjacentHTML('beforeend',
+        `<a-marker id="mk-${id}" type="pattern" url="lib/patt-${id}.patt" smooth="true" smoothCount="8">
+           <a-entity gltf-model="#m-${id}" animation-mixer="loop: repeat"
+                     scale="${e.escala} ${e.escala} ${e.escala}" position="0 ${e.y} 0"></a-entity>
+         </a-marker>`);
+    });
+    // Mensaje con la pregunta guía del experimento que se está viendo
+    document.addEventListener('markerFound', ev => {
+      const id = (ev.target.id || '').replace('mk-', '');
+      const e = EXPERIMENTOS[id]; if (e) msg.textContent = `${e.titulo}: ${e.pregunta}`;
+    });
+    document.addEventListener('markerLost', () => { msg.textContent = 'Apunta la cámara a un sticker de experimento'; });
   </script>
   <script src="registro-sw.js"></script>
 </body>
