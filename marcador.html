@@ -17,7 +17,7 @@
   </style>
 </head>
 <body style="margin:0;overflow:hidden">
-  <div id="mensaje">Apunta la cámara a un sticker de experimento</div>
+  <div id="mensaje">Apunta la cámara a un sticker</div>
   <a id="volver" href="index.html">← Experimentos</a>
   <a-scene embedded renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false"
            arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: lib/camera_para.dat;">
@@ -27,12 +27,14 @@
     <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
     <a-entity camera></a-entity>
   </a-scene>
+  <button id="audio" hidden style="position:fixed;bottom:12px;right:12px;z-index:9999;background:#7a1e1e;color:#fff;border:0;padding:12px 16px;border-radius:10px;font:16px Arial,sans-serif">🔊 Escuchar</button>
   <script>
-    // Un marcador (sticker) distinto por experimento: lib/patt-<id>.patt
-    const msg = document.getElementById('mensaje');
-    const activos = document.getElementById('activos');
-    const grupo = document.getElementById('marcadores');
-    Object.entries(EXPERIMENTOS).forEach(([id, e]) => {
+    // Un sticker distinto por pieza: lib/patt-<id>.patt (experimentos de física y museo de satélites)
+    const MSG0 = 'Apunta la cámara a un sticker';
+    const msg = document.getElementById('mensaje'), btn = document.getElementById('audio');
+    const activos = document.getElementById('activos'), grupo = document.getElementById('marcadores');
+    const TODOS = Object.assign({}, EXPERIMENTOS, ASTROBIO);
+    Object.entries(TODOS).forEach(([id, e]) => {
       activos.insertAdjacentHTML('beforeend', `<a-asset-item id="m-${id}" src="modelos/${id}.glb"></a-asset-item>`);
       grupo.insertAdjacentHTML('beforeend',
         `<a-marker id="mk-${id}" type="pattern" url="lib/patt-${id}.patt" smooth="true" smoothCount="8">
@@ -40,12 +42,23 @@
                      scale="${e.escala} ${e.escala} ${e.escala}" position="0 ${e.y} 0"></a-entity>
          </a-marker>`);
     });
-    // Mensaje con la pregunta guía del experimento que se está viendo
+    let audio = null, actual = null;
+    function detener() { if (audio) { audio.pause(); audio = null; } btn.hidden = true; btn.textContent = '🔊 Escuchar'; actual = null; }
     document.addEventListener('markerFound', ev => {
-      const id = (ev.target.id || '').replace('mk-', '');
-      const e = EXPERIMENTOS[id]; if (e) msg.textContent = `${e.titulo}: ${e.pregunta}`;
+      const id = (ev.target.id || '').replace('mk-', ''), e = TODOS[id]; if (!e) return;
+      msg.textContent = e.pregunta ? `${e.titulo}: ${e.pregunta}` : `${e.titulo}: ${e.tema}`;
+      if (e.audio) { if (actual !== id) detener(); actual = id; btn.hidden = false; }
     });
-    document.addEventListener('markerLost', () => { msg.textContent = 'Apunta la cámara a un sticker de experimento'; });
+    document.addEventListener('markerLost', ev => {
+      msg.textContent = MSG0;
+      if (actual && ev.target.id === 'mk-' + actual) detener();
+    });
+    // iPhone solo reproduce sonido después de un toque del usuario
+    btn.addEventListener('click', () => {
+      const e = TODOS[actual]; if (!e) return;
+      if (!audio) { audio = new Audio(e.audio); audio.addEventListener('ended', () => { btn.textContent = '🔊 Escuchar'; }); }
+      if (audio.paused) { audio.play(); btn.textContent = '⏸ Pausar'; } else { audio.pause(); btn.textContent = '🔊 Seguir'; }
+    });
   </script>
   <script src="registro-sw.js"></script>
 </body>

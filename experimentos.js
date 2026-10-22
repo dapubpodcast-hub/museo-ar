@@ -13,3 +13,16 @@ window.EXPERIMENTOS = {
     pregunta: '¿Por qué el agua gira más rápido cuando se acerca al centro del remolino?',
     escala: 5.0, y: 0.5 }
 };
+
+// Red Astrobio · museo de satélites: modelos 3D con audio propio.
+window.ASTROBIO = {
+  sputnik1: { titulo: 'Sputnik 1', tema: 'El primer satélite artificial',
+    texto: 'Lanzado por la Unión Soviética el 4 de octubre de 1957.',
+    audio: 'audio/sputnik.mp3', escala: 2.5, y: 0.05 },
+  tess: { titulo: 'TESS', tema: 'Un telescopio espacial que busca exoplanetas',
+    texto: 'Satélite de la NASA, lanzado en 2018, que busca exoplanetas con el método de tránsito.',
+    audio: 'audio/tess.mp3', escala: 2.5, y: 0.05 },
+  chandrayaan2: { titulo: 'Chandrayaan-2', tema: 'Una misión a la Luna',
+    texto: 'Misión de la agencia espacial de la India (ISRO), lanzada en 2019, con orbitador, módulo de aterrizaje y rover.',
+    audio: 'audio/chandrayaan2.mp3', escala: 2.5, y: 0.05 }
+};

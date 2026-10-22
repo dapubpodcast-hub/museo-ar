@@ -15,15 +15,31 @@
   <main>
     <model-viewer id="mv" camera-controls autoplay ar ar-modes="webxr scene-viewer quick-look"
       ar-scale="auto" shadow-intensity="0.6" alt="Modelo 3D del experimento"></model-viewer>
-    <div class="tarjeta" style="margin-top:14px"><small>Pregunta guía</small><p id="preg" style="margin:6px 0 0"></p></div>
+    <div class="tarjeta" style="margin-top:14px"><small id="rotulo">Pregunta guía</small><p id="preg" style="margin:6px 0 0"></p>
+      <div class="audio" id="caja-audio" hidden><a class="btn" id="btn-audio" href="#">🔊 Escuchar el audio</a></div></div>
     <div class="botones"><a class="btn sec" href="index.html">← Experimentos</a><a class="btn sec" id="otro" href="marcador.html">Con sticker</a></div>
   </main>
   <script>
     const id = new URLSearchParams(location.search).get('m');
-    const e = EXPERIMENTOS[id] || EXPERIMENTOS.punto_ciego, k = EXPERIMENTOS[id] ? id : 'punto_ciego';
-    document.getElementById('tit').textContent = `Experimento ${e.n} · ${e.titulo}`;
-    document.getElementById('area').textContent = e.area;
-    document.getElementById('preg').textContent = e.pregunta;
+    const k = (EXPERIMENTOS[id] || ASTROBIO[id]) ? id : 'punto_ciego';
+    const e = EXPERIMENTOS[k] || ASTROBIO[k];
+    if (EXPERIMENTOS[k]) {
+      document.getElementById('tit').textContent = `Experimento ${e.n} · ${e.titulo}`;
+      document.getElementById('area').textContent = e.area;
+      document.getElementById('preg').textContent = e.pregunta;
+    } else {
+      document.getElementById('tit').textContent = e.titulo;
+      document.getElementById('area').textContent = 'Red Astrobio · museo de satélites';
+      document.getElementById('rotulo').textContent = e.tema;
+      document.getElementById('preg').textContent = e.texto;
+      document.getElementById('caja-audio').hidden = false;
+      let au = null;
+      document.getElementById('btn-audio').addEventListener('click', ev => {
+        ev.preventDefault();
+        if (!au) { au = new Audio(e.audio); au.addEventListener('ended', () => { ev.target.textContent = '🔊 Escuchar el audio'; }); }
+        if (au.paused) { au.play(); ev.target.textContent = '⏸ Pausar'; } else { au.pause(); ev.target.textContent = '🔊 Seguir escuchando'; }
+      });
+    }
     document.title = e.titulo;
     const mv = document.getElementById('mv');
     mv.setAttribute('src', `modelos/${k}.glb`);
