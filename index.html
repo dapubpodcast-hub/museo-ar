@@ -20,6 +20,8 @@
   <main>
     <div id="estado-offline" class="aviso">Preparando el modo sin conexión…</div>
     <div id="lista"></div>
+    <h2 class="seccion">Red Astrobio · museo de satélites</h2>
+    <div id="lista-astrobio"></div>
     <div class="tarjeta">
       <small>¿Cómo se usa?</small>
       <p><b>Sin marcador:</b> abre el modelo y pulsa el botón de realidad aumentada para verlo sobre una mesa o el piso.<br>
@@ -34,6 +36,16 @@
       cont.insertAdjacentHTML('beforeend',
         `<div class="tarjeta"><small>Experimento ${e.n} · ${e.area}</small>
          <h2>${e.titulo}</h2><p>${e.pregunta}</p>
+         <div class="botones">
+           <a class="btn" href="ver.html?m=${id}">Ver en RA (sin marcador)</a>
+           <a class="btn sec" href="marcador.html">Con sticker</a>
+         </div></div>`);
+    });
+    const lista2 = document.getElementById('lista-astrobio');
+    Object.entries(ASTROBIO).forEach(([id, e]) => {
+      lista2.insertAdjacentHTML('beforeend',
+        `<div class="tarjeta"><small>Red Astrobio · con audio</small>
+         <h2>${e.titulo}</h2><p>${e.tema}. ${e.texto}</p>
          <div class="botones">
            <a class="btn" href="ver.html?m=${id}">Ver en RA (sin marcador)</a>
            <a class="btn sec" href="marcador.html">Con sticker</a>
