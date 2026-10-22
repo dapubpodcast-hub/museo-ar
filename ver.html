@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ver experimento en RA</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  <script src="experimentos.js"></script>
+  <style>model-viewer{width:100%;height:60vh;background:#fff;border-radius:14px;border:2px solid #cdbf9f}</style>
+</head>
+<body>
+  <header><h1 id="tit"></h1><p id="area"></p></header>
+  <main>
+    <model-viewer id="mv" camera-controls autoplay ar ar-modes="webxr scene-viewer quick-look"
+      ar-scale="auto" shadow-intensity="0.6" alt="Modelo 3D del experimento"></model-viewer>
+    <div class="tarjeta" style="margin-top:14px"><small>Pregunta guía</small><p id="preg" style="margin:6px 0 0"></p></div>
+    <div class="botones"><a class="btn sec" href="index.html">← Experimentos</a><a class="btn sec" id="otro">Con marcador Hiro</a></div>
+  </main>
+  <script>
+    const id = new URLSearchParams(location.search).get('m');
+    const e = EXPERIMENTOS[id] || EXPERIMENTOS.punto_ciego, k = EXPERIMENTOS[id] ? id : 'punto_ciego';
+    document.getElementById('tit').textContent = `Experimento ${e.n} · ${e.titulo}`;
+    document.getElementById('area').textContent = e.area;
+    document.getElementById('preg').textContent = e.pregunta;
+    document.title = e.titulo;
+    const mv = document.getElementById('mv');
+    mv.setAttribute('src', `modelos/${k}.glb`);
+    mv.setAttribute('ios-src', `modelos/${k}.usdz`);
+    document.getElementById('otro').href = `marcador.html?m=${k}`;
+  </script>
+</body>
+</html>

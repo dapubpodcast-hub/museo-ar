@@ -1,98 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Prueba Tierra AR</title>
-
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <!-- AR.js -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
-    <style>
-        #mensaje {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            font-family: Arial, sans-serif;
-            z-index: 9999;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Museo AR · COMETA y ASTEROIDE</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script src="experimentos.js"></script>
 </head>
-
-<body style="margin: 0; overflow: hidden;">
-
-    <div id="mensaje">
-        Cargando Tierra 3D...
+<body>
+  <header>
+    <h1>Cuatro experimentos con realidad aumentada</h1>
+    <p>COMETA y ASTEROIDE · museo itinerante</p>
+  </header>
+  <main>
+    <div id="lista"></div>
+    <div class="tarjeta">
+      <small>¿Cómo se usa?</small>
+      <p><b>Sin marcador:</b> abre el modelo y pulsa el botón de realidad aumentada para verlo sobre una mesa o el piso.<br>
+      <b>Con marcador:</b> imprime o muestra en otra pantalla el marcador Hiro y apunta la cámara hacia él.</p>
+      <a class="btn sec" href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png">Marcador Hiro</a>
     </div>
-
-    <a-scene
-        embedded
-        renderer="logarithmicDepthBuffer: true;"
-        arjs="sourceType: webcam; debugUIEnabled: false;">
-
-        <a-assets>
-
-            <a-asset-item
-                id="earth"
-                src="RobotExpressive.glb">
-            </a-asset-item>
-
-        </a-assets>
-
-        <a-marker preset="hiro">
-
-            <a-entity
-    id="tierra"
-    gltf-model="#earth"
-    position="0 0 0"
-    scale="0.01 0.01 0.01">
-</a-entity>
-<a-entity
-    light="type: ambient; intensity: 2">
-</a-entity>
-
-<a-entity
-    light="type: directional; intensity: 2"
-    position="1 2 1">
-</a-entity>
-
-        </a-marker>
-
-        <a-entity camera></a-entity>
-
-    </a-scene>
-
-    <script>
-
-        const tierra = document.querySelector('#tierra');
-        const mensaje = document.querySelector('#mensaje');
-
-        tierra.addEventListener('model-loaded', function () {
-
-            mensaje.innerHTML = '🌎 ¡Tierra cargada! Apunta al marcador Hiro.';
-
-        });
-
-        tierra.addEventListener('model-error', function (error) {
-
-            mensaje.innerHTML =
-                '❌ ERROR: No se pudo cargar el modelo 3D.';
-
-            console.error('Error cargando Tierra:', error);
-
-        });
-
-    </script>
-
+  </main>
+  <p class="pie">Modelos esquemáticos: no están a escala (moléculas, rayos y partículas se agrandan).</p>
+  <script>
+    const cont = document.getElementById('lista');
+    Object.entries(EXPERIMENTOS).forEach(([id, e]) => {
+      cont.insertAdjacentHTML('beforeend',
+        `<div class="tarjeta"><small>Experimento ${e.n} · ${e.area}</small>
+         <h2>${e.titulo}</h2><p>${e.pregunta}</p>
+         <div class="botones">
+           <a class="btn" href="ver.html?m=${id}">Ver en RA (sin marcador)</a>
+           <a class="btn sec" href="marcador.html?m=${id}">Con marcador Hiro</a>
+         </div></div>`);
+    });
+  </script>
 </body>
-
 </html>
