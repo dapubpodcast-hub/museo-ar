@@ -1,4 +1,4 @@
-// Datos de los cuatro experimentos. "escala" ajusta el modelo al tamaño del marcador Hiro.
+// Datos de los cuatro experimentos. "escala" ajusta el modelo al tamaño del sticker.
 window.EXPERIMENTOS = {
   punto_ciego: { n: 1, titulo: 'El punto ciego', area: 'Óptica e ilusiones',
     pregunta: '¿Por qué un punto desaparece si lo miramos de reojo a cierta distancia?',

@@ -1,11 +1,12 @@
 // Service worker: guarda el sitio completo para usarlo sin conexión.
 // Al cambiar cualquier archivo, subir el número de VERSION para que los teléfonos actualicen.
-const VERSION = 'museo-ar-v1';
+const VERSION = 'museo-ar-v2';
 const ARCHIVOS = [
   './', 'index.html', 'ver.html', 'marcador.html', 'estilo.css', 'experimentos.js', 'registro-sw.js',
-  'manifest.webmanifest', 'icono-192.png', 'icono-512.png', 'marcador-hiro.png',
+  'manifest.webmanifest', 'icono-192.png', 'icono-512.png', 'stickers.pdf', 'stickers.png',
   'lib/aframe.min.js', 'lib/aframe-extras.min.js', 'lib/aframe-ar.js', 'lib/model-viewer.min.js',
-  'lib/camera_para.dat', 'lib/patt.hiro',
+  'lib/camera_para.dat',
+  'lib/patt-punto_ciego.patt', 'lib/patt-evaporacion.patt', 'lib/patt-uv.patt', 'lib/patt-remolino.patt',
   'modelos/punto_ciego.glb', 'modelos/punto_ciego.usdz',
   'modelos/evaporacion.glb', 'modelos/evaporacion.usdz',
   'modelos/uv.glb', 'modelos/uv.usdz',
